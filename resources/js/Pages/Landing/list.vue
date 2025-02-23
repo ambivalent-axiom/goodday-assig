@@ -19,51 +19,48 @@ const formatDate = (dateString) => {
 
 <template>
     <div class="mt-16 border-t border-gray-200 pt-16">
-        <div class="space-y-8">
+        <div class="space-y-4">
             <article
                 v-for="post in posts.data"
                 :key="post.id"
-                class="flex gap-6 p-6 border border-gray-200 rounded-lg"
+                class="flex items-start gap-4 p-4 border border-gray-200 rounded-lg"
             >
-                <!-- Image container on the left -->
-                <div class="flex-shrink-0 w-48">
+                <!-- Small Image Container -->
+                <div class="w-24 flex-shrink-0">
                     <img
                         v-if="post.image"
                         :src="post.image"
                         :alt="post.title"
-                        class="rounded-lg object-cover w-full aspect-[4/3]"
+                        class="rounded-md object-cover w-full aspect-square"
                     >
                     <div
                         v-else
-                        class="rounded-lg bg-gray-200 w-full aspect-[4/3] flex items-center justify-center"
+                        class="rounded-md bg-gray-200 w-full aspect-square flex items-center justify-center text-sm text-gray-500"
                     >
-                        <span class="text-gray-400">No image</span>
+                        No image
                     </div>
                 </div>
 
                 <!-- Content container -->
-                <div class="flex flex-col flex-grow gap-4">
-                    <div class="flex items-center gap-x-4 text-xs">
-                        <time :datetime="post.created_at" class="text-gray-500">
-                            {{ formatDate(post.created_at) }}
-                        </time>
+                <div class="flex flex-col flex-grow">
+                    <div class="text-xs text-gray-500">
+                        <time :datetime="post.created_at">{{ formatDate(post.created_at) }}</time>
                     </div>
 
-                    <div class="group">
-                        <h3 class="text-lg font-semibold text-gray-900 group-hover:text-gray-600">
-                            <a
-                                @click.prevent="$emit('open-post', post)"
-                                href="#"
-                                class="hover:text-gray-600 cursor-pointer"
-                            >{{ post.title }}</a>
-                        </h3>
-                        <p class="mt-2 text-sm text-gray-600 line-clamp-2">{{ post.description }}</p>
-                    </div>
+                    <h3 class="text-lg font-semibold text-gray-900">
+                        <a
+                            @click.prevent="$emit('open-post', post)"
+                            href="#"
+                            class="hover:text-gray-600 cursor-pointer"
+                        >{{ post.title }}</a>
+                    </h3>
 
-                    <div class="flex items-center gap-x-4 mt-auto">
-                        <div class="text-sm">
-                            <p class="font-semibold text-gray-900">{{ post.user?.name }}</p>
-                        </div>
+                    <p class="mt-1 text-sm text-gray-600 line-clamp-2">
+                        {{ post.description }}
+                    </p>
+
+                    <div class="mt-2 text-sm font-semibold text-gray-900">
+                        {{ post.user?.name }}
                     </div>
                 </div>
             </article>
